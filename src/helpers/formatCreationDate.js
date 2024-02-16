@@ -1,5 +1,1 @@
-export const formatCreationDate = (date) => {
-  // write your solution here
-
-  return date;
-};
+export const formatCreationDate = (date) => date.replaceAll("/", ".");
