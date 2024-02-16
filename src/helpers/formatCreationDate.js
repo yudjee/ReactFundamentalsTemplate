@@ -1,1 +1,1 @@
-export const formatCreationDate = (date) => date.replaceAll("/", "-");
+export const formatCreationDate = (date) => date.replaceAll("/", ".");

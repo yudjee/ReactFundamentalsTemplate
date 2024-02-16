@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 const SHOW_COURSE = "Show course";
 
 export const CourseCard = ({ course, handleShowCourse, authorsList }) => {
-  const { description, authors, duration, creationDate, id } = course;
+  const { title, description, authors, duration, creationDate, id } = course;
   const getAuthors = () => {
     return authorsList
       .filter((author) => authors.includes(author.id))
@@ -18,7 +18,7 @@ export const CourseCard = ({ course, handleShowCourse, authorsList }) => {
   return (
     <div className={styles.cardContainer} data-testid="courseCard">
       <div className={styles.cardText}>
-        {/* <h2>{title}</h2> */}
+        <h2>{title}</h2>
         <p>{description}</p>
       </div>
       <div className={styles.cardDetails}>
