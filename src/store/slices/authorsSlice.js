@@ -6,12 +6,11 @@ export const authorsSlice = createSlice({
   name: "authors",
   initialState,
   reducers: {
-    // setAuthors:
-    // saveAuthor:
+    setAuthors: (state, { payload }) => payload,
+    saveAuthor: (state, { payload }) => [...state, payload],
   },
 });
 
-// use these actions in your components / thunks
 export const { setAuthors, saveAuthor } = authorsSlice.actions;
 
 export default authorsSlice.reducer;

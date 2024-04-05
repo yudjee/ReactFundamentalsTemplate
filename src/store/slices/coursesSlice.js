@@ -6,14 +6,15 @@ export const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
-    // setCourses:
-    // saveCourse:
-    // deleteCourse:
-    // updateCourse:
+    setCourses: (state, { payload }) => [...state, ...payload],
+    saveCourse: (state, { payload }) => [...state, payload],
+    deleteCourse: (state, { payload }) =>
+      state.filter((item) => item.id !== payload),
+    updateCourse: (state, { payload }) =>
+      state.map((item) => (item.id === payload.id ? payload : item)),
   },
 });
 
-// use these actions in your components / thunks
 export const { setCourses, saveCourse, deleteCourse, updateCourse } =
   coursesSlice.actions;
 

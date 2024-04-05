@@ -11,12 +11,19 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // setUserData:
-    // removeUserData:
+    setUserData: (state, { payload }) => ({ ...payload, isAuth: true }),
+    // setUserData: (state, { payload }) => ({
+    // 	...payload,
+    // 	role: '',
+    // 	isAuth: true,
+    // }),
+    removeUserData: () => ({
+      ...initialState,
+      token: "",
+    }),
   },
 });
 
-// use these actions in your components / thunks
 export const { setUserData, removeUserData } = userSlice.actions;
 
 export default userSlice.reducer;

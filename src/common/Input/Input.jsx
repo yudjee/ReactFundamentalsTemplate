@@ -1,7 +1,6 @@
-// Module 1.
-// ** TASK DESCRIPTION ** - https://d17btkcdsmqrmh.cloudfront.net/new-react-fundamentals/docs/module-1/home-task/components#create-input-component
-
 import React from "react";
+
+import { DEFAULT_INPUT_TYPE } from "./constants";
 
 import styles from "./styles.module.css";
 
@@ -9,15 +8,23 @@ export const Input = ({
   placeholderText,
   labelText,
   onChange,
-  "data-testid": dataTestId,
-}) => (
-  <label className={styles.label}>
-    {labelText}
-    <input
-      onChange={onChange}
-      placeholder={placeholderText}
-      className={styles.input}
-      data-testid={dataTestId}
-    />
-  </label>
-);
+  type = DEFAULT_INPUT_TYPE,
+  value,
+  inputClassName = styles.input,
+  labelClassName = styles.label,
+  ...props
+}) => {
+  return (
+    <label className={labelClassName}>
+      {labelText}
+      <input
+        className={inputClassName}
+        value={value}
+        onChange={onChange}
+        type={type}
+        placeholder={placeholderText}
+        {...props}
+      />
+    </label>
+  );
+};

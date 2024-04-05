@@ -1,11 +1,19 @@
-// import React from "react";
+import React from "react";
 
-// import styles from "./styles.module.css";
+import { Button } from "../../../../common";
+import { BUTTON_TEXT } from "./constants";
 
-// export const AuthorItem = () => (
-// 	<div className={styles.authorItem} data-testid='authorItem'>
-// 		<span>Boris Smith</span>
+import styles from "./styles.module.css";
 
-// 		// reuse Button component for 'Add author' button with data-testid="addAuthor" attribute
-// 	</div>
-// );
+export const AuthorItem = ({ name, id, type, handleClick }) => {
+  return (
+    <div className={styles.authorItem}>
+      <span>{name}</span>
+      <Button
+        handleClick={() => handleClick({ id, name })}
+        buttonText={BUTTON_TEXT[type]}
+        data-testid="addAuthor"
+      />
+    </div>
+  );
+};

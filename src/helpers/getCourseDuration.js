@@ -1,10 +1,4 @@
-export const addZeroAtTheBeginning = (number) => {
-  if (number < 10) {
-    return `0${number}`;
-  }
-
-  return number;
-};
+import { addZeroAtTheBeginning } from "./addZeroAtTheBeginning";
 
 export const getCourseDuration = (duration) => {
   const hours = duration / 60;

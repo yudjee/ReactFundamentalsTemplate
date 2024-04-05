@@ -1,40 +1,65 @@
-// // Module 1. You don't need to do anything with this component (we had to comment this component for 1st module tests)
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-// // Module 2.
-// // * uncomment this component (ctrl + a => ctrl + /)
-// // * finish markup according to the figma https://www.figma.com/file/m0N0SGLclqUEGR6TUNvyn9/Fundamentals-Courses?type=design&node-id=2927-216&mode=design&t=0FIG0iRzKcD0s16M-0
-// // * add validation for fields: all fields are required. Show validation message. https://www.figma.com/file/m0N0SGLclqUEGR6TUNvyn9/Fundamentals-Courses?type=design&node-id=2932-191&mode=design&t=0FIG0iRzKcD0s16M-0
-// // * render this component by route '/login'
-// // * use login service to submit form data and make POST API request '/login'.
-// // * component should have a link to the Registration page (see design)
-// // * save token from API after success login to localStorage.
-// // ** PAY ATTATION ** token should be saved to localStorage inside login handler function after login service responce
-// // ** TASK DESCRIPTION ** - https://d17btkcdsmqrmh.cloudfront.net/new-react-fundamentals/docs/module-2/home-task/components#login-new-component
+import { Button, Input } from "../../common";
+import { login } from "../../services";
+import {
+  EMAIL,
+  EMAIL_PLACEHOLDER,
+  PASSWORD,
+  PASSWORD_PLACEHOLDER,
+} from "../Registration/constants";
+import { LOGIN } from "./constants";
 
-// // Module 3.
-// // * save user's name, token and email to the store after success login.
-// // ** TASK DESCRIPTION ** - https://d17btkcdsmqrmh.cloudfront.net/new-react-fundamentals/docs/module-3/home-task/components#login-component
+import styles from "./styles.module.css";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../store/slices/userSlice";
 
-// import React from "react";
+export const Login = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-// import styles from "./styles.module.css";
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      email,
+      password,
+    };
 
-// export const Login = () => {
-//   // write your code here
+    login(data).then((result) => {
+      localStorage.setItem("token", result.result);
+      dispatch(setUserData({ ...result.user, token: result.result }));
+      navigate("/courses");
+    });
+  };
 
-//   return (
-//     <div className={styles.container}>
-//       <h1>Login</h1>
-//       <div className={styles.formContainer}>
-//         <form onSubmit={handleSubmit}>
-//           // reuse Input component for email field // reuse Input component for
-//           password field // reuse Button component for 'Login' button
-//         </form>
-//         <p>
-//           If you don't have an account you may&nbsp; // use <Link /> component
-//           for navigation to Registration page
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
+  return (
+    <div className={styles.container}>
+      <h1>Login</h1>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit}>
+          <Input
+            placeholderText={EMAIL_PLACEHOLDER}
+            labelText={EMAIL}
+            onChange={({ target }) => setEmail(target.value)}
+            value={email}
+          />
+          <Input
+            placeholderText={PASSWORD_PLACEHOLDER}
+            labelText={PASSWORD}
+            onChange={({ target }) => setPassword(target.value)}
+            value={password}
+            type="password"
+          />
+          <Button type="submit" buttonText={LOGIN} className={styles.button} />
+        </form>
+        <p>
+          If you don't have an account you may &nbsp; <br />
+          <Link to={"/registration"}>Registration</Link>
+        </p>
+      </div>
+    </div>
+  );
+};

@@ -1,16 +1,30 @@
 import React from "react";
 
 import { Button } from "../../../../common";
+import { SHOW_COURSE } from "./constants";
 import { getCourseDuration, formatCreationDate } from "../../../../helpers";
 
 import styles from "./styles.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAuthorsSelector,
+  getUserRoleSelector,
+  getUserTokenSelector,
+} from "../../../../store/selectors";
+import { deleteCourseThunk } from "../../../../store/thunks/coursesThunk";
+import { MyLink } from "../../../../common/MyLink";
 
-const SHOW_COURSE = "Show course";
+import deleteIcon from "../../../../assets/deleteButtonIcon.svg";
+import editIcon from "../../../../assets/editButtonIcon.svg";
 
-export const CourseCard = ({ course, handleShowCourse, authorsList }) => {
+export const CourseCard = ({ course }) => {
   const { title, description, authors, duration, creationDate, id } = course;
+  const dispatch = useDispatch();
+  const allAuthors = useSelector(getAuthorsSelector);
+  const userRole = useSelector(getUserRoleSelector);
+  const token = useSelector(getUserTokenSelector);
   const getAuthors = () => {
-    return authorsList
+    return allAuthors
       .filter((author) => authors.includes(author.id))
       .map((item) => item.name)
       .join(", ");
@@ -34,10 +48,21 @@ export const CourseCard = ({ course, handleShowCourse, authorsList }) => {
           <b>Created: </b>
           <span>{formatCreationDate(creationDate)}</span>
         </p>
-        <Button
-          buttonText={SHOW_COURSE}
-          handleClick={() => handleShowCourse(id)}
-        />
+        <div className={styles.buttonsContainer}>
+          <MyLink to={`/courses/${id}`}>{SHOW_COURSE}</MyLink>
+          {userRole === "admin" && (
+            <>
+              <Button
+                buttonText={<img src={deleteIcon} alt="delete" />}
+                handleClick={() => dispatch(deleteCourseThunk(id, token))}
+                data-testid="deleteCourse"
+              />
+              <MyLink to={`/courses/update/${id}`} data-testid="updateCourse">
+                <img src={editIcon} alt="edit" />
+              </MyLink>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,9 @@
+.input {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}

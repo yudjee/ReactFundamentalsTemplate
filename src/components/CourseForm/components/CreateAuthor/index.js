@@ -1,1 +1,1 @@
-export * from "./CreateAuhtor";
+export * from "./CreateAuthor";

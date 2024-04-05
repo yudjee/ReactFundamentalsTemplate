@@ -1,0 +1,16 @@
+.searchBar {
+	display: flex;
+	margin-right: auto;
+}
+.searchButton {
+	margin-left: 16px;
+}
+
+.input {
+	display: inline;
+	height: 100%;
+}
+
+.label {
+	display: inline;
+}

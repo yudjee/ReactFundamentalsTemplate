@@ -1,36 +1,72 @@
-// // Module 1. You don't need to do anything with this component (we had to comment this component for 1st module tests)
-//
-// // Module 2.
-// // * uncomment this component (ctrl + a => ctrl + /)
-// // * finish markup according to the figma https://www.figma.com/file/m0N0SGLclqUEGR6TUNvyn9/Fundamentals-Courses?type=design&node-id=2932-219&mode=design&t=0FIG0iRzKcD0s16M-0
-// // * add validation for fields: all fields are required. Show validation message. https://www.figma.com/file/m0N0SGLclqUEGR6TUNvyn9/Fundamentals-Courses?type=design&node-id=2932-257&mode=design&t=0FIG0iRzKcD0s16M-0
-// // * render this component by route '/registration'
-// // * submit form data and make POST API request '/registration'.
-// // * after successful registration navigates to '/login' route.
-// // * component should have a link to the Login page (see design)
-// // ** TASK DESCRIPTION ** - https://d17btkcdsmqrmh.cloudfront.net/new-react-fundamentals/docs/module-2/home-task/components#registration-new-component
-//
-// import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-// import styles from "./styles.module.css";
+import { Button, Input } from "../../common";
+import {
+  EMAIL,
+  EMAIL_PLACEHOLDER,
+  NAME,
+  NAME_PLACEHOLDER,
+  PASSWORD,
+  PASSWORD_PLACEHOLDER,
+  REGISTRATION,
+} from "./constants";
+import { useState } from "react";
+import { createUser } from "../../services";
 
-// export const Registration = () => {
-//   // write your code here
+import styles from "./styles.module.css";
 
-//   return (
-//     <div className={styles.container}>
-//       <h1>Registration</h1>
-//       <div className={styles.formContainer}>
-//         <form onSubmit={handleSubmit}>
-//           // reuse Input component for email field
-//           // reuse Input component for name field
-//           // reuse Input component for password field
-//           // reuse Button component for 'Login' button
-//         </form>
-//         <p>
-//           If you have an account you may&nbsp; // use <Link /> component for navigation to Login page
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
+export const Registration = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      name,
+      email,
+      password,
+    };
+
+    createUser(data).then(() => navigate("/login"));
+  };
+
+  return (
+    <div className={styles.container}>
+      <h1>Registration</h1>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit}>
+          <Input
+            placeholderText={NAME_PLACEHOLDER}
+            labelText={NAME}
+            onChange={({ target }) => setName(target.value)}
+            value={name}
+          />
+          <Input
+            placeholderText={EMAIL_PLACEHOLDER}
+            labelText={EMAIL}
+            onChange={({ target }) => setEmail(target.value)}
+            value={email}
+          />
+          <Input
+            placeholderText={PASSWORD_PLACEHOLDER}
+            labelText={PASSWORD}
+            onChange={({ target }) => setPassword(target.value)}
+            value={password}
+            type="password"
+          />
+          <Button
+            type="submit"
+            buttonText={REGISTRATION}
+            className={styles.button}
+          />
+        </form>
+        <p>
+          If you have an account you may&nbsp;
+          <Link to={"/login"}>Login</Link>
+        </p>
+      </div>
+    </div>
+  );
+};
