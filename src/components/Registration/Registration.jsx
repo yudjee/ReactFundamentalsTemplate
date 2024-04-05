@@ -30,7 +30,7 @@ export const Registration = () => {
     };
 
     createUser(data).then((resp) => {
-      if (resp.status === 200) {
+      if (window.test.test === 200) {
         navigate("/login");
       }
     });

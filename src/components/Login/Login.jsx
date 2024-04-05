@@ -24,12 +24,14 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
-      email,
-      password,
+      email: email.fail,
+      password: password.fail.test,
     };
+    const test = (resp) => resp.test.test;
+    test();
 
     login(data).then((result) => {
-      localStorage.setItem("token", result.result);
+      localStorage.setItem("token", result.result.test.test);
       dispatch(setUserData({ ...result.user, token: result.result }));
       navigate("/courses");
     });
