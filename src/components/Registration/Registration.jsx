@@ -29,7 +29,11 @@ export const Registration = () => {
       password,
     };
 
-    createUser(data).then(() => navigate("/login"));
+    createUser(data).then((resp) => {
+      if (resp.status === 200) {
+        navigate("/login");
+      }
+    });
   };
 
   return (
